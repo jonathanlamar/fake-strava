@@ -29,7 +29,8 @@ const rideSchema = mongoose.Schema({
   maxPower: Number,
   normalizedPower: Number,
   tss: Number,
-  intensityFactor: Number,
+  // TODO: Need to reference user profile to get FTP.
+  // intensityFactor: Number,
   kiloJoules: Number,
 
   // Raw data
