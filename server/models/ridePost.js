@@ -10,12 +10,14 @@ const rideSchema = mongoose.Schema({
   creator: String,
 
   // Basic info.
-  // TODO: Add support for gpx.
+  // TODO: Add configurable units.
   startTime: Date,
   totalMiles: Number,
   movingTimeSeconds: Number,
   totalTimeSeconds: Number,
-  maxSpeed: Number,
+  avgSpeedMph: Number,
+  maxSpeedMph: Number,
+  elevationGainFeet: Number,
 
   // Biometrics
   // TODO: Add data types for time series data of heart rate and power
@@ -29,7 +31,9 @@ const rideSchema = mongoose.Schema({
   tss: Number,
   intensityFactor: Number,
   kiloJoules: Number,
-  kiloCalories: Number,
+
+  // Raw data
+  fitFile: Buffer,
 });
 
 const RidePost = mongoose.model("RidePost", rideSchema);
