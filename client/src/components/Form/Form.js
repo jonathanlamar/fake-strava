@@ -87,10 +87,12 @@ const Form = ({ currentId, setCurrentId }) => {
           }
         />
         <div className={classes.fileInput}>
-          <FileBase
+          <input
             type="file"
             multiple={false}
-            onDone={() => {}} // TODO
+            onChange={(file) => {
+              console.log(file);
+            }} // TODO
           />
         </div>
         <Button

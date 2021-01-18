@@ -11,10 +11,12 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import moment from "moment";
 import { useDispatch } from "react-redux";
+import bike from "../../../images/pennyfarthing.jpeg";
 
 import useStyles from "./styles";
 import { deleteRide } from "../../../actions/rides";
 
+// TODO: The whole design needs to be updated.
 const Ride = ({ rideData, setCurrentId }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -23,7 +25,7 @@ const Ride = ({ rideData, setCurrentId }) => {
     <Card className={classes.card}>
       <CardMedia
         className={classes.media}
-        image={rideData.selectedFile}
+        image={bike}
         title={rideData.title}
       />
       <div className={classes.overlay}>
