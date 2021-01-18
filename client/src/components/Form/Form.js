@@ -2,29 +2,19 @@ import React, { useState, useEffect } from "react";
 import { TextField, Button, Typography, Paper } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
 import { createRide, updateRide } from "../../actions/rides";
+import {
+  extractMetadataFromFitFile,
+  parseFitData,
+} from "../../utils/parseFitData";
 
 import useStyles from "./styles";
 
 const Form = ({ currentId, setCurrentId }) => {
   const [rideData, setRideData] = useState({
-    creator: "",
     title: "",
     description: "",
-    totalMiles: "",
-    movingTimeSeconds: "",
-    totalTimeSeconds: "",
-    maxSpeed: "",
-    avgCadence: "",
-    maxCadence: "",
-    avgHeartRate: "",
-    maxHeartRate: "",
-    avgPower: "",
-    maxPower: "",
-    normalizedPower: "",
-    tss: "",
-    intensityFactor: "",
-    kiloJoules: "",
-    kiloCalories: "",
+    creator: "",
+    fitFile: null,
   });
   const ride = useSelector((state) =>
     currentId ? state.rides.find((p) => p._id === currentId) : null
@@ -50,24 +40,10 @@ const Form = ({ currentId, setCurrentId }) => {
   const clear = () => {
     setCurrentId(null);
     setRideData({
-      creator: "",
       title: "",
       description: "",
-      totalMiles: "",
-      movingTimeSeconds: "",
-      totalTimeSeconds: "",
-      maxSpeed: "",
-      avgCadence: "",
-      maxCadence: "",
-      avgHeartRate: "",
-      maxHeartRate: "",
-      avgPower: "",
-      maxPower: "",
-      normalizedPower: "",
-      tss: "",
-      intensityFactor: "",
-      kiloJoules: "",
-      kiloCalories: "",
+      creator: "",
+      fitFile: null,
     });
   };
 
@@ -80,7 +56,7 @@ const Form = ({ currentId, setCurrentId }) => {
         onSubmit={handleSubmit}
       >
         <Typography variant="h6">
-          {currentId ? "Editing" : "Creating"} a memory
+          {currentId ? "Editing" : "Creating"} a ride
         </Typography>
         <TextField
           name="creator"
@@ -103,43 +79,20 @@ const Form = ({ currentId, setCurrentId }) => {
         <TextField
           name="description"
           variant="outlined"
-          label="Message"
+          label="Description"
           fullWidth
           value={rideData.description}
           onChange={(e) =>
             setRideData({ ...rideData, description: e.target.value })
           }
         />
-        <TextField
-          name="totalMiles"
-          variant="outlined"
-          label="Total Miles"
-          fullWidth
-          value={rideData.totalMiles}
-          onChange={(e) =>
-            setRideData({ ...rideData, totalMiles: e.target.value })
-          }
-        />
-        <TextField
-          name="movingTimeSeconds"
-          variant="outlined"
-          label="Moving Time (s)"
-          fullWidth
-          value={rideData.movingTimeSeconds}
-          onChange={(e) =>
-            setRideData({ ...rideData, movingTimeSeconds: e.target.value })
-          }
-        />
-        <TextField
-          name="maxSpeed"
-          variant="outlined"
-          label="Max Speed (mph)"
-          fullWidth
-          value={rideData.maxSpeed}
-          onChange={(e) =>
-            setRideData({ ...rideData, maxSpeed: e.target.value })
-          }
-        />
+        <div className={classes.fileInput}>
+          <FileBase
+            type="file"
+            multiple={false}
+            onDone={() => {}} // TODO
+          />
+        </div>
         <Button
           className={classes.buttonSubmit}
           variant="contained"
