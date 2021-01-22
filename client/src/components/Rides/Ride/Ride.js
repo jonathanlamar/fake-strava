@@ -21,9 +21,6 @@ const Ride = ({ rideData, setCurrentId }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  console.log("Posting.");
-  console.log(rideData);
-
   return (
     <Card className={classes.card}>
       <CardMedia

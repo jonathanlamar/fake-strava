@@ -21,7 +21,6 @@ export const getRides = () => async (dispatch) => {
 
 export const createRide = (rideData) => async (dispatch) => {
   try {
-    console.log("In submit action.");
     const { data } = await api.createRide(rideData);
 
     dispatch({ type: CREATE, payload: data });
