@@ -21,6 +21,9 @@ const Ride = ({ rideData, setCurrentId }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
+  console.log("Posting.");
+  console.log(rideData);
+
   return (
     <Card className={classes.card}>
       <CardMedia
@@ -31,7 +34,7 @@ const Ride = ({ rideData, setCurrentId }) => {
       <div className={classes.overlay}>
         <Typography variant="h6">{rideData.creator}</Typography>
         <Typography variant="h6">
-          {moment(rideData.startTime).fromNow()}
+          {moment(rideData.metadata.startTimeUtc).fromNow()}
         </Typography>
       </div>
       <div className={classes.overlay2}>
@@ -60,8 +63,8 @@ const Ride = ({ rideData, setCurrentId }) => {
       </CardContent>
       <div className={classes.details}>
         <Typography variant="body2" color="textSecondary">
-          Distance: {rideData.totalMiles} Moving time:{" "}
-          {rideData.movingTimeSeconds}
+          Distance: {rideData.metadata.totalMiles} Moving time:{" "}
+          {rideData.metadata.movingTimeSeconds}
         </Typography>
       </div>
       <CardActions className={classes.cardActions}>

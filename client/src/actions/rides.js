@@ -1,4 +1,5 @@
 import * as api from "../api";
+import { FETCH_ALL, CREATE, UPDATE, DELETE } from "./actionTypes";
 
 // Action Creators.  This is for redux, which updates a shared global state
 // through "actions" and "reducers" via a "dispatcher." You dispatch actions
@@ -12,27 +13,28 @@ export const getRides = () => async (dispatch) => {
   try {
     const { data } = await api.getRides();
 
-    dispatch({ type: "FETCH_ALL", payload: data });
+    dispatch({ type: FETCH_ALL, payload: data });
   } catch (error) {
-    console.log(error.message);
+    console.log(error);
   }
 };
 
-export const createRide = (ride) => async (dispatch) => {
+export const createRide = (rideData) => async (dispatch) => {
   try {
-    const { data } = await api.createRide(ride);
+    console.log("In submit action.");
+    const { data } = await api.createRide(rideData);
 
-    dispatch({ type: "CREATE", payload: data });
+    dispatch({ type: CREATE, payload: data });
   } catch (error) {
-    console.log(error.message);
+    console.log(error);
   }
 };
 
-export const updateRide = (id, ride) => async (dispatch) => {
+export const updateRide = (id, rideData) => async (dispatch) => {
   try {
-    const { data } = await api.updateRide(id, ride);
+    const { data } = await api.updateRide(id, rideData);
 
-    dispatch({ type: "UPDATE", payload: data });
+    dispatch({ type: UPDATE, payload: data });
   } catch (error) {
     console.log(error);
   }
@@ -42,7 +44,7 @@ export const deleteRide = (id) => async (dispatch) => {
   try {
     await api.deleteRide(id);
 
-    dispatch({ type: "DELETE", payload: id });
+    dispatch({ type: DELETE, payload: id });
   } catch (error) {
     console.log(error);
   }

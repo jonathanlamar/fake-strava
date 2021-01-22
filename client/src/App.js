@@ -9,6 +9,7 @@ import pennyfarthing from "./images/pennyfarthing.jpeg";
 import useStyles from "./styles";
 
 const App = () => {
+  // TODO: Take time to understand what is happening here.
   const [currentId, setCurrentId] = useState(null);
   const classes = useStyles();
   const dispatch = useDispatch();

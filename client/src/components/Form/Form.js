@@ -1,21 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { TextField, Button, Typography, Paper } from "@material-ui/core";
+import FileBase from "react-file-base64";
 import { useSelector, useDispatch } from "react-redux";
 import { createRide, updateRide } from "../../actions/rides";
+import { RideData } from "../../schema";
+
+import useStyles from "./styles";
 import {
   extractMetadataFromFitFile,
   parseFitData,
 } from "../../utils/parseFitData";
 
-import useStyles from "./styles";
-
 const Form = ({ currentId, setCurrentId }) => {
-  const [rideData, setRideData] = useState({
-    title: "",
-    description: "",
-    creator: "",
-    fitFile: null,
-  });
+  const [rideData, setRideData] = useState(new RideData());
   const ride = useSelector((state) =>
     currentId ? state.rides.find((p) => p._id === currentId) : null
   );
@@ -39,12 +36,7 @@ const Form = ({ currentId, setCurrentId }) => {
 
   const clear = () => {
     setCurrentId(null);
-    setRideData({
-      title: "",
-      description: "",
-      creator: "",
-      fitFile: null,
-    });
+    setRideData(new RideData());
   };
 
   return (
@@ -87,12 +79,17 @@ const Form = ({ currentId, setCurrentId }) => {
           }
         />
         <div className={classes.fileInput}>
-          <input
-            type="file"
+          <FileBase
             multiple={false}
-            onChange={(file) => {
-              console.log(file);
-            }} // TODO
+            onDone={(file) => {
+              var parsedFitFile = parseFitData(file.base64);
+              var fitMetaData = extractMetadataFromFitFile(parsedFitFile);
+              setRideData({
+                ...rideData,
+                fitFile: file.base64,
+                metadata: fitMetaData,
+              });
+            }}
           />
         </div>
         <Button

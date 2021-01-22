@@ -16,12 +16,17 @@ export const getRides = async (req, res) => {
 export const createRide = async (req, res) => {
   const ridePost = req.body;
   const newRide = new RidePost(ridePost);
+  console.log("ridePost:");
+  console.log(ridePost);
+  console.log("newRide:");
+  console.log(newRide);
 
   try {
     await newRide.save();
 
     res.status(201).json(newRide);
   } catch (error) {
+    console.log(error);
     res.status(409).json({ message: error.message });
   }
 };

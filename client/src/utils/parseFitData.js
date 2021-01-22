@@ -1,5 +1,5 @@
-import fs from "fs";
 import FitParser from "fit-file-parser";
+import * as toArrayBuffer from "to-array-buffer";
 
 // TODO: Add support for different units.
 var fitParser = new FitParser({
@@ -11,13 +11,13 @@ var fitParser = new FitParser({
   mode: "cascade",
 });
 
-export function parseFitData(filename) {
+export function parseFitData(base64) {
   try {
-    var content = fs.readFileSync(filename);
     var parsedData;
+    const buffer = toArrayBuffer(base64);
 
     // Fitparser uses these stupid callbacks instead of promises.
-    fitParser.parse(content, (error, data) => {
+    fitParser.parse(buffer, (error, data) => {
       if (error) {
         throw error;
       }
@@ -40,7 +40,7 @@ export function extractMetadataFromFitFile(parsedFitFile) {
   const session = activity.sessions[0];
 
   return {
-    startTimeUtc: session.start_time,
+    startTimeUtc: session.start_time.valueOf(), // Unix time (ms)
     totalMiles: session.total_distance,
     movingTimeSeconds: session.total_timer_time,
     totalTimeSeconds: activity.total_timer_time,
